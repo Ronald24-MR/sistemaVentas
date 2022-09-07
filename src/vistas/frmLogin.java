@@ -5,12 +5,21 @@
  */
 package vistas;
 
+
+import java.awt.Color;
+import static java.time.Clock.system;
+import javax.swing.JOptionPane;
+import modelo.EntidadVendedor;
+import modelo.VendedorDAO;
+
 /**
  *
  * @author APRENDIZ
  */
 public class frmLogin extends javax.swing.JDialog {
 
+    VendedorDAO vdao = new VendedorDAO();
+    EntidadVendedor ev = new EntidadVendedor();
     /**
      * Creates new form frmLogin
      */
@@ -18,6 +27,7 @@ public class frmLogin extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -32,20 +42,24 @@ public class frmLogin extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtClave = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        txtUsuario1 = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jPanel3 = new javax.swing.JPanel();
+        btnEntrar = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        txtClave = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
-        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(128, 128, 128));
@@ -58,16 +72,6 @@ public class frmLogin extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Contraseña:");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
-
-        txtClave.setBackground(new java.awt.Color(255, 255, 255));
-        txtClave.setForeground(new java.awt.Color(153, 153, 153));
-        txtClave.setBorder(null);
-        txtClave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtClaveActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 360, 30));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 360, 20));
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -76,31 +80,50 @@ public class frmLogin extends javax.swing.JDialog {
         jLabel4.setText("Iniciar Sesion");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 100, -1));
 
-        txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario1.setForeground(new java.awt.Color(153, 153, 153));
-        txtUsuario1.setBorder(null);
-        jPanel2.add(txtUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 360, 30));
+        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(204, 204, 204));
+        txtUsuario.setText("Ingrese su usuario");
+        txtUsuario.setBorder(null);
+        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtUsuarioMousePressed(evt);
+            }
+        });
+        jPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 360, 30));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 360, 20));
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        btnEntrar.setBackground(new java.awt.Color(153, 153, 153));
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Entrar");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel5MouseExited(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout btnEntrarLayout = new javax.swing.GroupLayout(btnEntrar);
+        btnEntrar.setLayout(btnEntrarLayout);
+        btnEntrarLayout.setHorizontalGroup(
+            btnEntrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnEntrarLayout.setVerticalGroup(
+            btnEntrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 110, 40));
+        jPanel2.add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 110, 40));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login.png"))); // NOI18N
@@ -110,6 +133,18 @@ public class frmLogin extends javax.swing.JDialog {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Usuario:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+
+        txtClave.setBackground(new java.awt.Color(255, 255, 255));
+        txtClave.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtClave.setForeground(new java.awt.Color(204, 204, 204));
+        txtClave.setText("********");
+        txtClave.setBorder(null);
+        txtClave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtClaveMousePressed(evt);
+            }
+        });
+        jPanel2.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 360, 20));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 470, 360));
 
@@ -123,9 +158,68 @@ public class frmLogin extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClaveActionPerformed
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtClaveActionPerformed
+     
+        String dni = new String(txtClave.getPassword());
+        String user = txtUsuario.getText();
+        
+        if(txtUsuario.getText().equals("") || txtClave.getPassword().equals("")){
+            JOptionPane.showMessageDialog(null, "Debe llenar los campos");
+            txtUsuario.requestFocus();
+        }
+        else{
+            ev=vdao.ValidarVendedor(dni, user);
+            if(ev.getUser2() != null && ev.getDni() != null){
+                this.setVisible(false);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Debe ingresar usuarios validos");
+                txtUsuario.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
+        // TODO add your handling code here:
+        if(txtUsuario.getText().equals("Ingrese su usuario")){
+            txtUsuario.setText("");
+            txtUsuario.setForeground(Color.black);
+        }
+        
+        if(String.valueOf(txtClave.getPassword()).isEmpty()){
+            txtClave.setText("********");
+            txtClave.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtUsuarioMousePressed
+
+    private void txtClaveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtClaveMousePressed
+        // TODO add your handling code here:
+        if(String.valueOf(txtClave.getPassword()).equals("********")){
+            txtClave.setText("");
+            txtClave.setForeground(Color.black);
+        }
+        
+        if(txtUsuario.getText().isEmpty()){
+            txtUsuario.setText("Ingrese su usuario");
+            txtUsuario.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtClaveMousePressed
+
+    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
+        // TODO add your handling code here:
+        btnEntrar.setBackground(new Color(154,154,154));
+    }//GEN-LAST:event_jLabel5MouseEntered
+
+    private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
+        // TODO add your handling code here:
+        btnEntrar.setBackground(new Color(128,128,128));
+    }//GEN-LAST:event_jLabel5MouseExited
 
     /**
      * @param args the command line arguments
@@ -185,6 +279,7 @@ public class frmLogin extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -193,10 +288,9 @@ public class frmLogin extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField txtClave;
-    private javax.swing.JTextField txtUsuario1;
+    private javax.swing.JPasswordField txtClave;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
