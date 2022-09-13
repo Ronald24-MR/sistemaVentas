@@ -55,15 +55,16 @@ public class frmPrincipal extends javax.swing.JFrame {
         ventanaPrincipal.setLayout(ventanaPrincipalLayout);
         ventanaPrincipalLayout.setHorizontalGroup(
             ventanaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 592, Short.MAX_VALUE)
+            .addGap(0, 875, Short.MAX_VALUE)
         );
         ventanaPrincipalLayout.setVerticalGroup(
             ventanaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 356, Short.MAX_VALUE)
+            .addGap(0, 318, Short.MAX_VALUE)
         );
 
         jMenu4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu4.setForeground(new java.awt.Color(0, 0, 0));
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu (1).png"))); // NOI18N
         jMenu4.setText("MENU");
         jMenu4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu4.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
@@ -77,12 +78,14 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuItem1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jMenuItem1.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/boton-web-de-ayuda.png"))); // NOI18N
         jMenuItem1.setText("Ayuda");
         jMenuItem1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu4.add(jMenuItem1);
 
         jMenuItem2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jMenuItem2.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salida.png"))); // NOI18N
         jMenuItem2.setText("Salir");
         jMenuItem2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu4.add(jMenuItem2);
@@ -91,6 +94,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenu1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu1.setForeground(new java.awt.Color(0, 0, 0));
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ventas.png"))); // NOI18N
         jMenu1.setText("VENTAS");
         jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
@@ -98,6 +102,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuItem3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jMenuItem3.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bolsa-de-la-compra.png"))); // NOI18N
         jMenuItem3.setText("Generar Ventas");
         jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +116,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenu2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu2.setForeground(new java.awt.Color(0, 0, 0));
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mantenimiento-web.png"))); // NOI18N
         jMenu2.setText("MANTENIMIENTO");
         jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
@@ -118,6 +124,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuItem4.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jMenuItem4.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clasificacion.png"))); // NOI18N
         jMenuItem4.setText("Cliente");
         jMenuItem4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +136,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuItem5.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jMenuItem5.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/producto.png"))); // NOI18N
         jMenuItem5.setText("Producto");
         jMenuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +148,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuItem6.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jMenuItem6.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cajero.png"))); // NOI18N
         jMenuItem6.setText("Vendedor");
         jMenuItem6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -153,6 +162,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenu3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu3.setForeground(new java.awt.Color(0, 0, 0));
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reporte-de-negocios.png"))); // NOI18N
         jMenu3.setText("REPORTES");
         jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu3.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
@@ -160,6 +170,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuItem7.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jMenuItem7.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/grafico-de-barras.png"))); // NOI18N
         jMenuItem7.setText("Reporte de Ventas");
         jMenuItem7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu3.add(jMenuItem7);
@@ -266,6 +277,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JDesktopPane ventanaPrincipal;
+    public static javax.swing.JDesktopPane ventanaPrincipal;
     // End of variables declaration//GEN-END:variables
 }

@@ -74,6 +74,8 @@ public class ProductoForm extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        btnEliminar1 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
@@ -318,6 +320,38 @@ public class ProductoForm extends javax.swing.JInternalFrame {
 
         jPanel2.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 130, -1));
 
+        btnEliminar1.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel10.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("CERRAR");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel10MouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btnEliminar1Layout = new javax.swing.GroupLayout(btnEliminar1);
+        btnEliminar1.setLayout(btnEliminar1Layout);
+        btnEliminar1Layout.setHorizontalGroup(
+            btnEliminar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+        );
+        btnEliminar1Layout.setVerticalGroup(
+            btnEliminar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(btnEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, -1, -1));
+
         tabla.setBackground(new java.awt.Color(255, 255, 255));
         tabla.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tabla.setForeground(new java.awt.Color(0, 0, 0));
@@ -552,15 +586,30 @@ public class ProductoForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tablaMouseClicked
 
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MouseEntered
+
+    private void jLabel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnActualizar;
     private javax.swing.JPanel btnAgregar;
     private javax.swing.JPanel btnEliminar;
+    private javax.swing.JPanel btnEliminar1;
     private javax.swing.JPanel btnEntrar;
     private javax.swing.JPanel btnEntrar1;
     private javax.swing.JPanel btnEntrar2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

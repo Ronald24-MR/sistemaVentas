@@ -23,6 +23,29 @@ public class ClienteDAO implements CRUD {
     PreparedStatement ps;
     ResultSet rs;
 
+    public EntidadCliente listarId(String dni){
+        EntidadCliente ec = new EntidadCliente();
+        String sql = "select * from cliente where Dni=?";
+        try{
+            con=cn.Conectar();
+            ps=con.prepareStatement(sql);
+            ps.setString(1, dni);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                ec.setIdCliente(rs.getInt(1));
+                ec.setDni(rs.getString(2));
+                ec.setNombres(rs.getString(3));
+                ec.setDireccion(rs.getString(4));
+                ec.setEstado(rs.getString(5));
+            }
+        }catch(Exception ex){
+            
+        }
+        return ec;
+    }
+    
+    
+    
     @Override
     public List listar() {
         List<EntidadCliente>lista=new ArrayList<>();
