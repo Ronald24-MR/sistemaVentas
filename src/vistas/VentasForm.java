@@ -5,11 +5,18 @@
  */
 package vistas;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.ClienteDAO;
+import modelo.DetalleVentas;
 import modelo.EntidadCliente;
 import modelo.EntidadProducto;
+import modelo.EntidadVentas;
 import modelo.ProductoDAO;
+import modelo.VentasDAO;
 
 /**
  *
@@ -18,11 +25,25 @@ import modelo.ProductoDAO;
 public class VentasForm extends javax.swing.JInternalFrame {
     ClienteDAO dao = new ClienteDAO();
     ProductoDAO pdao = new ProductoDAO();
+    VentasDAO vdao = new VentasDAO();
+    EntidadVentas ev = new EntidadVentas();
+    DetalleVentas dv = new DetalleVentas();
+    EntidadCliente ec = new EntidadCliente();
+    
+    int item=0;
+
+    double tpagar;
+    double precio;
+    int cantidad;
+    
+    DefaultTableModel modelo = new DefaultTableModel();
     /**
      * Creates new form VentasForm
      */
     public VentasForm() {
         initComponents();
+        Calendar calendar = new GregorianCalendar();
+        txtFecha.setText(""+calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     /**
@@ -40,7 +61,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtNroSerie = new javax.swing.JTextField();
+        txtSerie = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -54,7 +75,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
         btnBuscar1 = new javax.swing.JButton();
         btnBuscar2 = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
-        txtNroSerie4 = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -94,9 +115,9 @@ public class VentasForm extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("NRO SERIE:");
 
-        txtNroSerie.setBackground(new java.awt.Color(204, 204, 204));
-        txtNroSerie.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtNroSerie.setForeground(new java.awt.Color(0, 0, 0));
+        txtSerie.setBackground(new java.awt.Color(204, 204, 204));
+        txtSerie.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtSerie.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/personal.png"))); // NOI18N
@@ -122,7 +143,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
                         .addGap(212, 212, 212)
                         .addComponent(jLabel4)
                         .addGap(4, 4, 4)
-                        .addComponent(txtNroSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -138,7 +159,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNroSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
@@ -171,8 +192,8 @@ public class VentasForm extends javax.swing.JInternalFrame {
         txtCodProducto.setForeground(new java.awt.Color(0, 0, 0));
 
         txtPrecio.setBackground(new java.awt.Color(204, 204, 204));
-        txtPrecio.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtPrecio.setForeground(new java.awt.Color(0, 0, 0));
+        txtPrecio.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
+        txtPrecio.setForeground(new java.awt.Color(51, 0, 255));
 
         txtCantidad.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
@@ -197,10 +218,15 @@ public class VentasForm extends javax.swing.JInternalFrame {
         btnAgregar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         btnAgregar.setText("AGREGAR");
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
-        txtNroSerie4.setBackground(new java.awt.Color(204, 204, 204));
-        txtNroSerie4.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtNroSerie4.setForeground(new java.awt.Color(0, 0, 0));
+        txtFecha.setBackground(new java.awt.Color(204, 204, 204));
+        txtFecha.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
+        txtFecha.setForeground(new java.awt.Color(153, 0, 0));
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
@@ -219,7 +245,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
         jLabel13.setText("VENDE:");
 
         txtCliente.setBackground(new java.awt.Color(204, 204, 204));
-        txtCliente.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtCliente.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
         txtCliente.setForeground(new java.awt.Color(0, 0, 0));
 
         txtProducto.setBackground(new java.awt.Color(204, 204, 204));
@@ -256,7 +282,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
                     .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNroSerie4))
+                    .addComponent(txtFecha))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -305,7 +331,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtCantidad)
-                    .addComponent(txtNroSerie4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtVende, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -323,7 +349,8 @@ public class VentasForm extends javax.swing.JInternalFrame {
             }
         ));
         tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tabla.setIntercellSpacing(new java.awt.Dimension(6, 6));
+        tabla.setIntercellSpacing(new java.awt.Dimension(4, 10));
+        tabla.setRowHeight(25);
         jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -350,8 +377,8 @@ public class VentasForm extends javax.swing.JInternalFrame {
         jLabel14.setText("TOTAL A PAGAR:");
 
         txtTotal.setBackground(new java.awt.Color(204, 204, 204));
-        txtTotal.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtTotal.setForeground(new java.awt.Color(0, 0, 0));
+        txtTotal.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(0, 204, 51));
 
         btnCancelar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         btnCancelar.setText("CANCELAR");
@@ -360,6 +387,11 @@ public class VentasForm extends javax.swing.JInternalFrame {
         btnGenerar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         btnGenerar.setText("GENERAR VENTA");
         btnGenerar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -439,6 +471,84 @@ public class VentasForm extends javax.swing.JInternalFrame {
         buscarProducto();
     }//GEN-LAST:event_btnBuscar2ActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        agregarProducto();
+        limpiar();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        // TODO add your handling code here:
+        guardarVenta();
+        guardarDetalle();
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
+    void guardarVenta(){
+        int idv = 1;
+        int idc = ec.getIdCliente();
+        String serie = txtSerie.getText();
+        String fecha = txtFecha.getText();
+        double monto = tpagar;
+        String estado = "1";
+        
+        ev.setIdCliente(idc);
+        ev.setIdVendedor(idv);
+        ev.setNumeroVentas(serie);
+        ev.setFechaVentas(fecha);
+        ev.setMonto(monto);
+        ev.setEstado(estado);
+        vdao.GuardarVentas(ev);
+    }
+    
+    void guardarDetalle(){
+        String idv = vdao.IdVentas();
+        int idve = Integer.parseInt(idv);
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            int idp = Integer.parseInt(tabla.getValueAt(i, 1).toString());
+            int cant = Integer.parseInt(tabla.getValueAt(i, 3).toString());
+            double prec = Double.parseDouble(tabla.getValueAt(i, 4).toString());
+            dv.setIdVentas(idve);
+            dv.setIdProducto(idp);
+            dv.setCantidad(cant);
+            dv.setPrecioVenta(prec);
+            vdao.GuardarDetalleVentas(dv);
+        }
+    }
+    
+    void agregarProducto(){
+        double total;
+        modelo = (DefaultTableModel)tabla.getModel();
+        item=item+1;
+        int idp = Integer.parseInt(txtCodProducto.getText());
+        String nomp = txtProducto.getText();
+        precio = Double.parseDouble(txtPrecio.getText());
+        cantidad = Integer.parseInt(txtCantidad.getValue().toString());
+        int stock = Integer.parseInt(txtStock.getText());
+        total =cantidad*precio;
+        ArrayList lista = new ArrayList();
+        if(stock>0){
+            lista.add(item);
+            lista.add(idp);
+            lista.add(nomp);
+            lista.add(cantidad);
+            lista.add(precio);
+            lista.add(total);
+            Object[]ob=new Object[6];
+            ob[0]=lista.get(0);
+            ob[1]=lista.get(1);
+            ob[2]=lista.get(2);
+            ob[3]=lista.get(3);
+            ob[4]=lista.get(4);
+            ob[5]=lista.get(5);
+            modelo.addRow(ob);
+            tabla.setModel(modelo);
+            calcularTotal();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Stock producto no disponible");
+        }
+        
+    }
     void buscarCliente(){
         int r;
         String codigo = txtCodCliente.getText();
@@ -463,12 +573,13 @@ public class VentasForm extends javax.swing.JInternalFrame {
     }
 
     void buscarProducto(){
-        int r;
+
+         
         if(txtCodProducto.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Debe ingresar el codigo del producto");
         }
         else{
-            int id = Integer.parseInt(txtCodProducto.getText());
+           int id = Integer.parseInt(txtCodProducto.getText());
             EntidadProducto producto = pdao.listarId(id);
             if(producto.getIdProducto() != 0){
                 txtProducto.setText(producto.getNombres());
@@ -479,15 +590,28 @@ public class VentasForm extends javax.swing.JInternalFrame {
                 txtStock.setEditable(false);
             }
             else{
-                r = JOptionPane.showConfirmDialog(this, "Cliente no registrado, Desea registrar un cliente?");
-                if(r==0){
-                    ProductoForm pf = new ProductoForm();
-                    frmPrincipal.ventanaPrincipal.add(pf);
-                    pf.setVisible(true);
-                }
-                
+                JOptionPane.showMessageDialog(this, "Producto no registrado");
+                txtCodProducto.requestFocus();
             }
         }
+    }
+    
+    void calcularTotal(){
+       tpagar=0;
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            cantidad=Integer.parseInt(tabla.getValueAt(i, 3).toString());
+            precio=Double.parseDouble(tabla.getValueAt(i, 4).toString());
+            tpagar = tpagar+(cantidad*precio);
+        }
+        txtTotal.setText(""+tpagar);
+    }
+    
+    void limpiar(){
+        txtCodProducto.setText("");
+        txtProducto.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -520,10 +644,10 @@ public class VentasForm extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCodCliente;
     private javax.swing.JTextField txtCodProducto;
-    private javax.swing.JTextField txtNroSerie;
-    private javax.swing.JTextField txtNroSerie4;
+    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtProducto;
+    private javax.swing.JTextField txtSerie;
     private javax.swing.JTextField txtStock;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JTextField txtVende;
