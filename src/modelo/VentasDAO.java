@@ -18,11 +18,27 @@ public class VentasDAO {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    int r = 0;
+    int r ;
+    
+    public String NroSerieVentas(){
+        String serie = "";
+        String sql = "select max(NumeroSerie) from ventas";
+        try{
+            con=cn.Conectar();
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                serie=rs.getString(1);
+            }
+        }catch(Exception e){
+            
+        }
+        return serie;
+    }
     
     public String IdVentas(){
         String idv = "";
-        String sql = "select max(idVentas) from ventas";
+        String sql = "select max(IdVentas) from ventas";
         try{
             con=cn.Conectar();
             ps=con.prepareStatement(sql);
@@ -38,7 +54,7 @@ public class VentasDAO {
     
     public int GuardarVentas(EntidadVentas v){
         
-        String sql = "insert into ventas(Cliente_idCliente,Vendedor_idVendedor,NumeroSerie,FechaVentas,Monto,Estado)values(?,?,?,?,?,?)";
+        String sql = "insert into ventas(IdCliente,IdVendedor,NumeroSerie,FechaVentas,Monto,Estado)values(?,?,?,?,?,?)";
         try{
             con=cn.Conectar();
             ps=con.prepareStatement(sql);
@@ -48,6 +64,7 @@ public class VentasDAO {
             ps.setString(4, v.getFechaVentas());
             ps.setDouble(5, v.getMonto());
             ps.setString(6, v.getEstado());
+
             r=ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
@@ -56,14 +73,14 @@ public class VentasDAO {
     }
     
     public int GuardarDetalleVentas(DetalleVentas dv){
-        String sql = "insert into detalleventas(Cantidad,PrecioVenta,Ventas_idVentas,Producto_idProducto)values(?,?,?,?)";
+        String sql = "insert into detalle_ventas(IdVentas,IdProducto,Cantidad,PrecioVenta)values(?,?,?,?)";
         try{
             con=cn.Conectar();
             ps=con.prepareStatement(sql);
-            ps.setInt(1, dv.getCantidad());
-            ps.setDouble(2, dv.getPrecioVenta());
-            ps.setInt(3, dv.getIdVentas());
-            ps.setInt(4, dv.getIdProducto());
+            ps.setInt(3, dv.getCantidad());
+            ps.setDouble(4, dv.getPrecioVenta());
+            ps.setInt(1, dv.getIdVentas());
+            ps.setInt(2, dv.getIdProducto());
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();

@@ -21,9 +21,25 @@ public class ProductoDAO implements CRUD {
     PreparedStatement ps;
     ResultSet rs;
 
+    int r;
+    
+    public int actualizarStock(int cant, int idp){
+        String sql = "update producto set Stock=? where IdProducto=?";
+        try{
+           con=cn.Conectar();
+           ps=con.prepareStatement(sql);
+           ps.setInt(1, cant);
+           ps.setInt(2, idp);
+           ps.executeUpdate();
+        }catch(Exception e){
+            
+        }
+        return r;
+    }
+    
     public EntidadProducto listarId(int id){
         EntidadProducto ep = new EntidadProducto();
-        String sql = "select * from producto where idProducto=?";
+        String sql = "select * from producto where IdProducto=?";
         try{
             con=cn.Conectar();
             ps=con.prepareStatement(sql);

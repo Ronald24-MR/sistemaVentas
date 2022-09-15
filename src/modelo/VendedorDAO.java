@@ -26,7 +26,7 @@ public class VendedorDAO implements CRUD {
     public EntidadVendedor ValidarVendedor(String dni, String user){
         EntidadVendedor ev = new EntidadVendedor();
         
-        String sql="select * from vendedor where Dni=? and User2=?";
+        String sql="select * from vendedor where Dni=? and User=?";
         try {
              acceso=con.Conectar();
              ps=acceso.prepareStatement(sql);
@@ -76,7 +76,7 @@ public class VendedorDAO implements CRUD {
     @Override
     public int add(Object[] o) {
         int r = 0;
-        String sql = "insert into vendedor(Dni,Nombres,Telefono,Estado,User2)values(?,?,?,?,?)";
+        String sql = "insert into vendedor(Dni,Nombres,Telefono,Estado,User)values(?,?,?,?,?)";
         try{
             acceso=con.Conectar();
             ps=acceso.prepareStatement(sql);
@@ -94,7 +94,7 @@ public class VendedorDAO implements CRUD {
     @Override
     public int actualizar(Object[] o) {
         int r = 0; 
-        String sql = "update vendedor set Dni=?,Nombres=?,Telefono=?,Estado=?,User2=? where IdVendedor=?";
+        String sql = "update vendedor set Dni=?,Nombres=?,Telefono=?,Estado=?,User=? where IdVendedor=?";
         try{
            acceso=con.Conectar();
            ps=acceso.prepareStatement(sql);

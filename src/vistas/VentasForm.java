@@ -14,6 +14,7 @@ import modelo.ClienteDAO;
 import modelo.DetalleVentas;
 import modelo.EntidadCliente;
 import modelo.EntidadProducto;
+import modelo.EntidadVendedor;
 import modelo.EntidadVentas;
 import modelo.ProductoDAO;
 import modelo.VentasDAO;
@@ -29,9 +30,11 @@ public class VentasForm extends javax.swing.JInternalFrame {
     EntidadVentas ev = new EntidadVentas();
     DetalleVentas dv = new DetalleVentas();
     EntidadCliente ec = new EntidadCliente();
+    EntidadVendedor evd = new EntidadVendedor();
     
     int item=0;
 
+    
     double tpagar;
     double precio;
     int cantidad;
@@ -42,10 +45,21 @@ public class VentasForm extends javax.swing.JInternalFrame {
      */
     public VentasForm() {
         initComponents();
+        generarSerie();
         Calendar calendar = new GregorianCalendar();
         txtFecha.setText(""+calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
     }
 
+    void generarSerie(){
+        String serie=vdao.NroSerieVentas();
+        if(serie==null){
+            txtSerie.setText("0000001");
+        }else{
+            int increment = Integer.parseInt(serie);
+            increment = increment + 1;
+            txtSerie.setText("000000"+increment);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -242,7 +256,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("VENDE:");
+        jLabel13.setText("VENDEDOR:");
 
         txtCliente.setBackground(new java.awt.Color(204, 204, 204));
         txtCliente.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
@@ -283,20 +297,15 @@ public class VentasForm extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtFecha))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addGap(46, 46, 46))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel11))
+                .addGap(43, 43, 43)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtProducto)
+                    .addComponent(txtProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                     .addComponent(txtCliente, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtVende)
                     .addComponent(txtStock, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -474,17 +483,59 @@ public class VentasForm extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         agregarProducto();
-        limpiar();
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         // TODO add your handling code here:
-        guardarVenta();
-        guardarDetalle();
+        if(txtTotal.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Debe ingresar datos");
+        }
+        else{
+            guardarVenta();
+            guardarDetalle();
+            actualizarStock();
+            JOptionPane.showMessageDialog(this, "Se realizo con exito");
+            nuevo();
+            generarSerie();
+        }
+        
     }//GEN-LAST:event_btnGenerarActionPerformed
 
+    void nuevo(){
+        limpiarTabla();
+        txtCodCliente.setText("");
+        txtCliente.setText("");
+        txtCantidad.setValue(1);
+        txtCodProducto.setText("");
+        txtPrecio.setText("");
+        txtProducto.setText("");
+        txtStock.setText("");
+        txtTotal.setText("");
+        txtCodCliente.requestFocus();
+    }
+    
+    void limpiarTabla(){
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i=i-1;
+        }
+    }
+    
+    void actualizarStock(){
+        
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            EntidadProducto ep = new EntidadProducto();
+            int idp=Integer.parseInt(tabla.getValueAt(i, 1).toString());
+            int cant=Integer.parseInt(tabla.getValueAt(i, 3).toString());
+            ep=pdao.listarId(idp);
+            int sa=ep.getStock()-cant;
+            pdao.actualizarStock(sa,idp);
+        }
+    }
+    
     void guardarVenta(){
-        int idv = 1;
+        int idv = evd.getIdVendedor();
         int idc = ec.getIdCliente();
         String serie = txtSerie.getText();
         String fecha = txtFecha.getText();
@@ -606,13 +657,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
         txtTotal.setText(""+tpagar);
     }
     
-    void limpiar(){
-        txtCodProducto.setText("");
-        txtProducto.setText("");
-        txtPrecio.setText("");
-        txtStock.setText("");
-        
-    }
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar1;
